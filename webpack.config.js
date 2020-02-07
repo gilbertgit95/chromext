@@ -4,11 +4,12 @@ const path = require('path');
 // file tobe directly copies to dist folder
 const manifestFile =     'manifest.json'
 const popupHTML =        'popup.html'
+const distFolder =       './dist'
 
-const outDirectory =     path.resolve(__dirname, './dist')
-const backgroundOut =   'background.js'
-const popupOut =        'popup.js'
-const contentOut =      'content.js'
+const backgroundOut =    'background.js'
+const popupOut =         'popup.js'
+const contentOut =       'content.js'
+const outDirectory =     path.resolve(__dirname, distFolder)
 
 const backgroundEntry =  path.resolve(__dirname, './src/background/index.js')
 const popupEntry =       path.resolve(__dirname, './src/popup/index.js')
@@ -40,11 +41,11 @@ const contentProcConfig = {
     new CopyPlugin([
       {
         from: path.resolve(__dirname, manifestFile),
-        to: path.resolve(__dirname, `./dist/${ manifestFile }`)
+        to: path.resolve(__dirname, `${ distFolder }/${ manifestFile }`)
       },
       {
         from: path.resolve(__dirname, popupHTML),
-        to: path.resolve(__dirname, `./dist/${ popupHTML }`)
+        to: path.resolve(__dirname, `${ distFolder }/${ popupHTML }`)
       }
     ])
   ]
