@@ -1,9 +1,11 @@
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
-// file tobe directly copies to dist folder
+// file to be directly copies to dist folder
 const manifestFile =     'manifest.json'
 const popupHTML =        'popup.html'
+
+// the distribution folder or the actual chrome extension
 const distFolder =       './dist'
 
 const backgroundOut =    'background.js'
@@ -15,12 +17,36 @@ const backgroundEntry =  path.resolve(__dirname, './src/background/index.js')
 const popupEntry =       path.resolve(__dirname, './src/popup/index.js')
 const contentEntry =     path.resolve(__dirname, './src/content/index.js')
 
+const loaders = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      },
+      {
+        // Some change here
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
+    ]
+  }
+  // resolve: {
+  //   extensions: ['', '.js', '.jsx', '.css'],
+  //   modulesDirectories: [
+  //     'node_modules'
+  //   ]
+  // }
+}
+
 const backgroundProcConfig = {
   entry: backgroundEntry,
   output: {
     filename: backgroundOut,
     path: outDirectory
-  }
+  },
+  ...loaders
 }
 
 const popupProcConfig = {
@@ -28,7 +54,8 @@ const popupProcConfig = {
   output: {
     filename: popupOut,
     path: outDirectory
-  }
+  },
+  ...loaders
 }
 
 const contentProcConfig = {
@@ -37,6 +64,7 @@ const contentProcConfig = {
     filename: contentOut,
     path: outDirectory
   },
+  ...loaders,
   plugins: [
     new CopyPlugin([
       {
