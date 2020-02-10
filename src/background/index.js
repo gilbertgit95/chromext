@@ -1,0 +1,1 @@
+console.log('background page is running')

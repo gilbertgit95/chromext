@@ -2,8 +2,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 // file to be directly copies to dist folder
-const manifestFile =     'manifest.json'
-const popupHTML =        'popup.html'
+const staticFiles =      ['manifest.json', 'popup.html', 'icon.png']
 
 // the distribution folder or the actual chrome extension
 const distFolder =       './dist'
@@ -21,23 +20,17 @@ const loaders = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
       {
         // Some change here
-        test: /\.scss$/,
+        test: /\.(css|scss)$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   }
-  // resolve: {
-  //   extensions: ['', '.js', '.jsx', '.css'],
-  //   modulesDirectories: [
-  //     'node_modules'
-  //   ]
-  // }
 }
 
 const backgroundProcConfig = {
@@ -66,16 +59,14 @@ const contentProcConfig = {
   },
   ...loaders,
   plugins: [
-    new CopyPlugin([
-      {
-        from: path.resolve(__dirname, manifestFile),
-        to: path.resolve(__dirname, `${ distFolder }/${ manifestFile }`)
-      },
-      {
-        from: path.resolve(__dirname, popupHTML),
-        to: path.resolve(__dirname, `${ distFolder }/${ popupHTML }`)
-      }
-    ])
+    new CopyPlugin(
+      staticFiles.map((sFile) => {
+        return {
+          from: path.resolve(__dirname, sFile),
+          to: path.resolve(__dirname, `${ distFolder }/${ sFile }`)
+        }
+      })
+    )
   ]
 }
 
