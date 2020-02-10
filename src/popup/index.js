@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom'
 
 import './style.scss'
 
-import ComponentTemplate from '../components/componentTemplate.jsx'
+import Root from './root.jsx'
 
 const app = document.createElement('div')
 document.body.append(app)
 
-app? ReactDOM.render(<div><ComponentTemplate></ComponentTemplate></div>, app): false;
+app? ReactDOM.render(<Root></Root>, app): false;

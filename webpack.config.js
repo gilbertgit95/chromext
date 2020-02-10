@@ -1,5 +1,5 @@
 const CopyPlugin = require('copy-webpack-plugin');
-const path = require('path');
+const path =       require('path');
 
 // file to be directly copies to dist folder
 const staticFiles =      ['manifest.json', 'popup.html', 'icon.png']
