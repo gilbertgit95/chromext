@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import Button from '@material-ui/core/Button'
 
 // the parent component
 class Root extends Component {
@@ -27,7 +28,7 @@ class Root extends Component {
 
   render() {
     return (
-      <div>Root Component</div>
+      <div><Button variant="contained" color="primary">Test Btn</Button></div>
     )
   }
 }

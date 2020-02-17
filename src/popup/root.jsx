@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import Button from '@material-ui/core/Button'
 
 // the parent component
-class Root extends Component {
+export default class Root extends Component {
   constructor() {
     super()
 
     this.state = {
-      user: {}
+      user: {},
+      activeView: 'LOGOUT_VIEW', // LOGOUT_VIEW || LOGIN_VIEW
     }
   }
 
@@ -27,9 +29,7 @@ class Root extends Component {
 
   render() {
     return (
-      <div>Root Component</div>
+      <div><Button variant="contained" color="primary">Test Btn</Button></div>
     )
   }
 }
-
-export default Root
