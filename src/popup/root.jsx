@@ -1,35 +1,32 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useState, useEffect } from 'react'
 import Button from '@material-ui/core/Button'
+import TestComp from '../core/components/componentTemplate.jsx'
 
-// the parent component
-export default class Root extends Component {
-  constructor() {
-    super()
+const Root = (props) => {
+  // states
+  const [value, setValue] = useState('')
 
-    this.state = {
-      user: {},
-      activeView: 'LOGOUT_VIEW', // LOGOUT_VIEW || LOGIN_VIEW
+  // life cycles
+  useEffect(() => {
+    // mounted code here
+
+    // unmount code here
+    return () => {
+
     }
-  }
+  }, [])
 
-  componentDidMount() {
-    chrome.runtime.sendMessage({greeting: "hello"}, (response) => {
-      console.log(response.farewell)
-    })
-  }
+  // internal variables
 
-  componentDidUpdate() {
+  // internal methods
 
-  }
-
-  componentWillUnmount() {
-
-  }
-
-  render() {
-    return (
-      <div><Button variant="contained" color="primary">Test Btn</Button></div>
-    )
-  }
+  // render UI
+  return (
+    <div>
+      <Button variant="contained" color="primary">Root</Button>
+      <TestComp />
+    </div>
+  )
 }
+
+export default Root
