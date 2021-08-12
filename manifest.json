@@ -19,7 +19,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
+      "matches": ["*://www.npmjs.com/*"],
       "css": [],
       "js": ["content.js"]
     }
