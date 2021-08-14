@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start:watch": "webpack --config webpack.config.js --mode production --display-error-details --watch --info-verbosity verbose",
+    "start": "webpack --config webpack.config.js --mode production --display-error-details --watch --info-verbosity verbose",
     "build": "webpack --config webpack.config.js --mode production"
   },
   "keywords": [],
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
+    "@material-ui/icons": "^4.11.2",
     "material-table": "^1.69.3",
     "moment": "^2.29.1",
     "react": "^16.12.0",
