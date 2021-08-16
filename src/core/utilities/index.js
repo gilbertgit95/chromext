@@ -1,7 +1,7 @@
-export default {
-  test() {
-    console.log('hello this is a testing service')
-  }, 
+const message = {
+  
+}
 
-  // triggerBackground
+export default {
+  message
 }

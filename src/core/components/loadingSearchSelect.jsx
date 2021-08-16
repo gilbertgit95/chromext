@@ -28,7 +28,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const LoadingSearchSelect = (props) => {
 
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState(props.value)
+  const [selIndex, setSelIndex] = useState(null)
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -38,11 +39,14 @@ const LoadingSearchSelect = (props) => {
   }
 
   const onClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
-  const doThis = () => {
-    setValue(value + 1)
+  const onDone = () => {
+    if (typeof props.onChange == 'function') {
+      props.onChange(value)
+    }
+    setOpen(false)
   }
 
   return (
@@ -70,13 +74,27 @@ const LoadingSearchSelect = (props) => {
               <Typography variant="h6" className={classes.title}>
                 { props.dialogTitle? props.dialogTitle: 'Select Item' }
               </Typography>
-              <Button autoFocus color="inherit" onClick={onClose}>
+              <Button autoFocus color="inherit" onClick={onDone}>
                 Done
               </Button>
             </Toolbar>
           </AppBar>
           <div style={{ maxWidth: '100%', paddingTop: 50 }}>
-            <MaterialTable columns={props.columns} data={props.data} title='' />
+            <MaterialTable
+              columns={props.columns}
+              data={props.data}
+              onRowClick={(evt, row) => {
+                console.log(row)
+                setValue(row[props.property.value])
+                setSelIndex(row.tableData.id)
+              }}
+              options={{
+                rowStyle: rowData => ({
+                  backgroundColor:
+                    selIndex === rowData.tableData.id ? 'rgb(210 222 228)' : '#FFF'
+                })
+              }}
+              title='' />
           </div>
         </Dialog>
     </>
