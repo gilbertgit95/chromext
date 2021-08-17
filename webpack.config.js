@@ -36,7 +36,7 @@ const loaders = {
 
 // bundle background page related files
 const backgroundProcConfig = {
-  entry: backgroundEntry,
+  entry: ['regenerator-runtime/runtime.js', backgroundEntry],
   output: {
     filename: backgroundOut,
     path: outDirectory

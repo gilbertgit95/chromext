@@ -1,5 +1,6 @@
 import axios from 'axios'
 import moment from 'moment'
+import 'regenerator-runtime/runtime'
 
 export default class DS {
 	constructor(props) {
@@ -94,32 +95,37 @@ export default class DS {
 		if (typeof callback == 'function') {
 			// run the process below if the data type is static
 			if (this.type == 'static') {
+				// console.log('static callback')
 				return callback(source, null)
 			}
 
 			// run the process below if the data type is remote
 			if (this.type == 'remote') {
-				if (this.cacheMomentIsInvalid()) {
+				// console.log('remote')
+				if (!this.cacheMomentIsInvalid()) {
+					// console.log('cacheMomentIsInvalid callback')
 					return callback(source, null)
 				}
 
-				if (this.cacheMomentIsInvalid()) {
+				if (this.inprogress) {
 					return callback(source, null)
 				}
 
 				this.inprogress = true
 				try {
-
+					// console.log('before fetch')
 					let data = await this.fetch()
+					// console.log('after fetch')
 
 					this.inprogress = false
 					this.setCacheMoment()
 
-					return callback(data, null)
+					// console.log('remote callback')
+					return callback(data.data, null)
 				} catch (err) {
 					this.inprogress = false
 					this.setCacheMoment()
-
+					// console.log('err remote callback')
 					return callback(source, err)
 				}
 			}

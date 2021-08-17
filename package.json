@@ -30,6 +30,7 @@
     "moment": "^2.29.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-draggable": "^4.4.3"
+    "react-draggable": "^4.4.3",
+    "regenerator-runtime": "^0.13.9"
   }
 }

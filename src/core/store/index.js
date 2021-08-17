@@ -1,5 +1,5 @@
 import DS from './dataSource.js'
-import { message } './../utilities/'
+// import { message } './../utilities/'
 
 class Store {
 	constructor(config) {
@@ -18,6 +18,7 @@ class Store {
 	onChange() {
 		// send <group_name>.<store_name>
 		// to popup and the active tab
+		console.log(`${ this.groupName }.${ this.storeName }:`, this.dataValue)
 		
 	}
 
