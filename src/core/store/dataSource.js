@@ -10,17 +10,20 @@ export default class DS {
 		// cacheTime in minutes
 		this.cacheTime = props.cacheTime? props.cacheTime: 10
 
+		// cacheKey String
+		this.cacheKey = props.cacheKey? props.cacheKey: ''
+
 		// request type
-		this.requestMethod = props.requestMethod? props.requestMethod: null
+		this.method = props.method? props.method: null
 
 		// request header
-		this.requestHeader = props.requestHeader? props.requestHeader: null
+		this.headers = props.headers? props.headers: null
 
 		// req data
-		this.requestData = props.requestData? props.requestData: null
+		this.data = props.data? props.data: null
 
 		// url
-		this.requestURL = props.requestURL? props.requestURL: null
+		this.url = props.url? props.url: null
 
 		// other options
 		this.otherOptions = props.otherOptions? props.otherOptions: {}
@@ -43,17 +46,27 @@ export default class DS {
 		// cacheTime in seconds
 		if (props.cacheTime) this.cacheTime = props.cacheTime
 
+		// cacheKey String
+		if (props.cacheKey) {
+			// if new key is not the same as the old key,
+			// reset the cache moment
+			if (this.cacheKey !== props.cacheKey) {
+				this.cacheMoment = null
+			}
+			this.cacheKey = props.cacheKey
+		}
+
 		// request type
-		if (props.requestMethod) this.requestMethod = props.requestMethod
+		if (props.method) this.method = props.method
 
 		// request header
-		if (props.requestHeader) this.requestHeader = props.requestHeader
+		if (props.headers) this.headers = props.headers
 
 		// req data
-		if (props.requestData) this.requestData = props.requestData
+		if (props.data) this.data = props.data
 
 		// url
-		if (props.requestURL) this.requestURL = props.requestURL
+		if (props.url) this.url = props.url
 
 		// other options
 		if (props.otherOptions) this.otherOptions = props.otherOptions
@@ -83,20 +96,43 @@ export default class DS {
 	fetch() {
 		return this.axios({
 			...{
-				method: this.requestMethod,
-				url: this.requestURL,
-				data: this.requestData
+				method: this.method,
+				url: this.url,
+				data: this.data
 			},
 			...this.otherOptions
 		})
-	}	
+	}
+
+	async setData(source, callback) {
+		if (typeof callback == 'function') {
+			// local storage
+			if (this.type == 'localstorage') {
+				let storeName = `${ source.groupName }.${ source.storeName }`
+
+				localStorage.setItem(storeName, source.dataValue)
+				// return callback(source.dataValue, null)
+			}
+		}
+	}
 
 	async getData(source, callback) {
 		if (typeof callback == 'function') {
 			// run the process below if the data type is static
 			if (this.type == 'static') {
 				// console.log('static callback')
-				return callback(source, null)
+				return callback(source.dataValue, null)
+			}
+
+			// local storage
+			if (this.type == 'localstorage') {
+				let storeName = `${ source.groupName }.${ source.storeName }`
+				let storeVal = localStorage.getItem(storeName)
+
+				if (!source.dataValue) {
+					return callback(storeVal, null)
+				}
+				return callback(source.dataValue, null)
 			}
 
 			// run the process below if the data type is remote
@@ -104,11 +140,11 @@ export default class DS {
 				// console.log('remote')
 				if (!this.cacheMomentIsInvalid()) {
 					// console.log('cacheMomentIsInvalid callback')
-					return callback(source, null)
+					return callback(source.dataValue, null)
 				}
 
 				if (this.inprogress) {
-					return callback(source, null)
+					return callback(source.dataValue, null)
 				}
 
 				this.inprogress = true
@@ -126,7 +162,7 @@ export default class DS {
 					this.inprogress = false
 					this.setCacheMoment()
 					// console.log('err remote callback')
-					return callback(source, err)
+					return callback(source.dataValue, err)
 				}
 			}
 		}

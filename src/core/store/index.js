@@ -1,5 +1,4 @@
 import DS from './dataSource.js'
-// import { message } './../utilities/'
 
 class Store {
 	constructor(config) {
@@ -8,6 +7,8 @@ class Store {
 		this.dataValue = config.initialValue
 
 		this.ds = new DS(config.dataSource? config.dataSource: {type: 'static'})
+
+		this.onChange = null
 	}
 
 	setConfig(config) {
@@ -15,27 +16,53 @@ class Store {
 		if (config.dataSource) this.ds = new DS(config.dataSource)
 	}
 
-	onChange() {
-		// send <group_name>.<store_name>
-		// to popup and the active tab
-		console.log(`${ this.groupName }.${ this.storeName }:`, this.dataValue)
+	onCallback() {
+
+		if (typeof this.onChange == 'function') {
+			this.onChange({
+				dataValue: this.dataValue,
+				groupName: this.groupName,
+				storeName: this.storeName
+			})
+		}
 		
 	}
 
 	get value() {
-		this.ds.getData(this.dataValue, (data, err) => {
-			if (err) {
-				console.log(JSON.stringify(err))
-			}
+		this.ds.getData(
+			{
+				dataValue: this.dataValue,
+				groupName: this.groupName,
+				storeName: this.storeName
+			},
+			(data, err) => {
+				if (err) {
+					console.log(JSON.stringify(err))
+				}
 
-			this.value = data
-		})
+				this.value = data
+			}
+		)
 		return this.dataValue
 	}
 
 	set value(val) {
+		this.ds.setData(
+			{
+				dataValue: val,
+				groupName: this.groupName,
+				storeName: this.storeName
+			},
+			(data, err) => {
+				if (err) console.log(JSON.stringify(err))
+
+				this.dataValue = data
+				this.onCallback()
+			}
+		)
+
 		this.dataValue = val
-		this.onChange()
+		this.onCallback()
 	}
 }
 
