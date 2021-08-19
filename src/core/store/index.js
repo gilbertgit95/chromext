@@ -22,7 +22,8 @@ class Store {
 			this.onChange({
 				dataValue: this.dataValue,
 				groupName: this.groupName,
-				storeName: this.storeName
+				storeName: this.storeName,
+				inprogress: this.ds.inprogress
 			})
 		}
 		

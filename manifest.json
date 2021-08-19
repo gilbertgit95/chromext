@@ -6,11 +6,15 @@
   "icons": {
     "1433": "static/icon.png"
   },
+  "permissions": [
+    "<all_urls>",
+    "webRequest",
+    "webRequestBlocking",
+    "background",
+    "activeTab"
+  ],
   "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": true
+    "page": "background.html"
   },
   "browser_action": {
     "default_icon": "static/icon.png",

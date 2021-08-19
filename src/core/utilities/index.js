@@ -1,7 +1,3 @@
-const message = {
-  
-}
+import { messaging } from './messaging.js';
 
-export default {
-  message
-}
+export const msg = messaging

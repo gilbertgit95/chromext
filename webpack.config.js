@@ -3,7 +3,7 @@ const path =       require('path');
 
 // file to be directly copies to dist folder
 const staticFiles =         'static'
-const requiredStaticFiles = ['manifest.json', 'popup.html']
+const requiredStaticFiles = ['manifest.json', 'popup.html', 'background.html']
 
 // the distribution folder or the actual chrome extension
 const distFolder =       './dist'
