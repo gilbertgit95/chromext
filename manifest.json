@@ -11,7 +11,8 @@
     "webRequest",
     "webRequestBlocking",
     "background",
-    "activeTab"
+    "activeTab",
+    "tabs"
   ],
   "background": {
     "page": "background.html"
@@ -23,7 +24,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://www.npmjs.com/*"],
+      "matches": ["*://*/*"],
       "css": [],
       "js": ["content.js"]
     }
