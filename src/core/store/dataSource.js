@@ -110,7 +110,7 @@ export default class DS {
 			if (this.type == 'localstorage') {
 				let storeName = `${ source.groupName }.${ source.storeName }`
 
-				localStorage.setItem(storeName, source.dataValue)
+				localStorage.setItem(storeName, JSON.stringify(source.dataValue))
 				// return callback(source.dataValue, null)
 			}
 		}
@@ -129,6 +129,9 @@ export default class DS {
 				let storeName = `${ source.groupName }.${ source.storeName }`
 				let storeVal = localStorage.getItem(storeName)
 
+				// parse storedVal
+				if (storeVal) storeVal = JSON.parse(storeVal)
+
 				if (!source.dataValue) {
 					return callback(storeVal, null)
 				}
@@ -143,7 +146,13 @@ export default class DS {
 					return callback(source.dataValue, null)
 				}
 
+				// if in progress return the current value
 				if (this.inprogress) {
+					return callback(source.dataValue, null)
+				}
+
+				// check for the request requirements
+				if (this.url && this.method) {
 					return callback(source.dataValue, null)
 				}
 

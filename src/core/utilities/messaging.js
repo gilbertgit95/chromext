@@ -46,7 +46,7 @@ export const messaging = {
 				  resolve(response)
 				})
 			} catch (err) {
-				reject(err)
+				resolve(null)
 			}
 		})
 	},

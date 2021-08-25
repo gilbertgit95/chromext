@@ -44,7 +44,13 @@ class Store {
 				this.value = data
 			}
 		)
-		return this.dataValue
+
+		return {
+			dataValue: this.dataValue,
+			groupName: this.groupName,
+			storeName: this.storeName,
+			inprogress: this.ds.inprogress
+		}
 	}
 
 	set value(val) {
