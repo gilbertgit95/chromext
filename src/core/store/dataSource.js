@@ -169,9 +169,14 @@ export default class DS {
 					return callback(data.data, null)
 				} catch (err) {
 					this.inprogress = false
-					this.setCacheMoment()
+
+					// this.setCacheMoment()
 					// console.log('err remote callback')
-					return callback(source.dataValue, err)
+					// return callback(source.dataValue, err)
+
+					this.cacheMoment = null
+					return callback(null, err)
+
 				}
 			}
 		}
