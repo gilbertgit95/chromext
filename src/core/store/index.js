@@ -13,7 +13,7 @@ class Store {
 
 	setConfig(config) {
 		if (config.initialValue) this.dataValue = config.initialValue
-		if (config.dataSource) this.ds = new DS(config.dataSource)
+		if (config.dataSource) this.ds.setConfig(config.dataSource)
 	}
 
 	onCallback() {
@@ -39,9 +39,10 @@ class Store {
 			(data, err) => {
 				if (err) {
 					console.log(JSON.stringify(err))
+					this.value = {error: err}
+				} else {
+					this.value = data
 				}
-
-				this.value = data
 			}
 		)
 

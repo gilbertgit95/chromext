@@ -40,6 +40,7 @@ export default class DS {
 	}
 
 	setConfig(props) {
+
 		// data source type: 'remote', 'static'
 		if (props.type) this.type = props.type
 
@@ -152,7 +153,7 @@ export default class DS {
 				}
 
 				// check for the request requirements
-				if (this.url && this.method) {
+				if (!this.url || !this.method) {
 					return callback(source.dataValue, null)
 				}
 
