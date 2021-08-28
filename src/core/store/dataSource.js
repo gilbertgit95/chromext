@@ -67,7 +67,13 @@ export default class DS {
 		if (props.data) this.data = props.data
 
 		// url
-		if (props.url) this.url = props.url
+		if (props.url) {
+			// if url has change, then reset cache moment
+			if (this.url !== props.url) {
+				this.cacheMoment = null
+			}
+			this.url = props.url
+		}
 
 		// other options
 		if (props.otherOptions) this.otherOptions = props.otherOptions
@@ -117,12 +123,12 @@ export default class DS {
 		}
 	}
 
-	async getData(source, callback) {
-		if (typeof callback == 'function') {
+	async getData(source, eventCallback, normalCallback) {
+		if (typeof eventCallback == 'function' && typeof normalCallback == 'function') {
 			// run the process below if the data type is static
 			if (this.type == 'static') {
-				// console.log('static callback')
-				return callback(source.dataValue, null)
+				// console.log('static normalCallback')
+				return normalCallback(source.dataValue, null)
 			}
 
 			// local storage
@@ -134,27 +140,27 @@ export default class DS {
 				if (storeVal) storeVal = JSON.parse(storeVal)
 
 				if (!source.dataValue) {
-					return callback(storeVal, null)
+					return eventCallback(storeVal, null)
 				}
-				return callback(source.dataValue, null)
+				return normalCallback(source.dataValue, null)
 			}
 
 			// run the process below if the data type is remote
 			if (this.type == 'remote') {
 				// console.log('remote')
 				if (!this.cacheMomentIsInvalid()) {
-					// console.log('cacheMomentIsInvalid callback')
-					return callback(source.dataValue, null)
+					// console.log('cacheMomentIsInvalid normalCallback')
+					return normalCallback(source.dataValue, null)
 				}
 
 				// if in progress return the current value
 				if (this.inprogress) {
-					return callback(source.dataValue, null)
+					return normalCallback(source.dataValue, null)
 				}
 
 				// check for the request requirements
 				if (!this.url || !this.method) {
-					return callback(source.dataValue, null)
+					return normalCallback(source.dataValue, null)
 				}
 
 				this.inprogress = true
@@ -166,17 +172,17 @@ export default class DS {
 					this.inprogress = false
 					this.setCacheMoment()
 
-					// console.log('remote callback')
-					return callback(data.data, null)
+					// console.log('remote eventCallback')
+					return eventCallback(data.data, null)
 				} catch (err) {
 					this.inprogress = false
 
 					// this.setCacheMoment()
-					// console.log('err remote callback')
-					// return callback(source.dataValue, err)
+					// console.log('err remote eventCallback')
+					// return eventCallback(source.dataValue, err)
 
 					this.cacheMoment = null
-					return callback(null, err)
+					return eventCallback(null, err)
 
 				}
 			}

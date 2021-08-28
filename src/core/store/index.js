@@ -36,12 +36,22 @@ class Store {
 				groupName: this.groupName,
 				storeName: this.storeName
 			},
+			// has onChange event
 			(data, err) => {
 				if (err) {
 					console.log(JSON.stringify(err))
 					this.value = {error: err}
 				} else {
 					this.value = data
+				}
+			},
+			// no onchange event
+			(data, err) => {
+				if (err) {
+					console.log(JSON.stringify(err))
+					this.dataValue = {error: err}
+				} else {
+					this.dataValue = data
 				}
 			}
 		)

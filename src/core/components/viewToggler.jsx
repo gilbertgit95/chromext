@@ -21,7 +21,7 @@ const ViewToggler = (props) => {
   }
 
   return (
-    <Element onChange={onChange} />
+    <Element data={props.data}  onChange={onChange} />
   )
 }
 
