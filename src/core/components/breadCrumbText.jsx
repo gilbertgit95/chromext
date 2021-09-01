@@ -13,19 +13,11 @@ import Typography from '@material-ui/core/Typography'
 
 const BreadCrumbText = (props) => {
 
-    // check for text content
-    let isText = Boolean(typeof props.content == 'string')
-    // for text title
-    let text = isText && props.content.length? props.content: props.default
-    // for breadcrumbs
     let contents = []
-
-    // check for array content
-    if (!isText && props.content.length == 0) {
-        isText = true
-        text = props.default
-    } else {
+    if (props.content && typeof props.content == 'object' && props.content.length) {
         contents = props.content
+    } else {
+        contents = [props.default]
     }
 
     return (
@@ -35,7 +27,7 @@ const BreadCrumbText = (props) => {
             variant="caption">
             {
                 // if text display text directly, if not loop to items
-                isText? text: contents.map((item, index) => (
+                contents.map((item, index) => (
                     <>
                         {/* display item name */}
                         <b>{ item } </b>
