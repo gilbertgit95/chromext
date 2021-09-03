@@ -17,7 +17,14 @@ const SearchSelect = (props) => {
 
 
     useEffect(() => {
-        setOptions(props.options)
+        let searchkey = search.toLowerCase()
+
+        let filteredOptions = props.options.filter(item => {
+            let itemLabel = item[props.fields.label].toLowerCase()
+            return itemLabel.indexOf(searchkey) >= 0
+        })
+
+        setOptions(filteredOptions)
     }, [props.options])
 
     /**
