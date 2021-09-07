@@ -129,7 +129,15 @@ const SearchSelect = (props) => {
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
-                onClose={handleClose}>
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}>
                 {/* search section */}
                 <div
                     style={{
@@ -143,7 +151,7 @@ const SearchSelect = (props) => {
                         value={search} />
                 </div>
                 {/* options section */}
-                <div style={{maxHeight: 200, overflow: 'scroll'}}>
+                <div style={{minWidth: 200, maxHeight: 200, overflowY: 'auto'}}>
                     {
                         options.map((item, index) => {
                             return (

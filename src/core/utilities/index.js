@@ -1,7 +1,11 @@
 import { messaging } from './messaging.js';
+// import { phoneUtils } from './phone_number_util.js';
 
 // messaging services
 export const msg = messaging
+
+// phone utilities
+// export const phone = phoneUtils
 
 // wait services
 export const wait = {

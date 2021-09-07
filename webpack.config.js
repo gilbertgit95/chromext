@@ -1,4 +1,5 @@
 const CopyPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const path =       require('path');
 
 // file to be directly copies to dist folder
