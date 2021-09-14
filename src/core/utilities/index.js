@@ -5,7 +5,7 @@ import { messaging } from './messaging.js';
 export const msg = messaging
 
 // phone utilities
-// export const phone = phoneUtils
+// export const phoneUtil = phone
 
 // wait services
 export const wait = {

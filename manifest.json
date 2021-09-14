@@ -15,6 +15,7 @@
     "tabs"
   ],
   "background": {
+    "persistent": true,
     "page": "background.html"
   },
   "browser_action": {
@@ -26,7 +27,7 @@
     {
       "matches": ["*://*/*"],
       "css": [],
-      "js": ["content.js"]
+      "js": ["content.js", "static/twilio.min.js"]
     }
   ]
 }
