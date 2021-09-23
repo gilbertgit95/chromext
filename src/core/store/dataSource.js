@@ -37,6 +37,9 @@ export default class DS {
 
 		// fetching data
 		this.inprogress = false
+
+		// data id
+		this.dataId = null
 	}
 
 	setConfig(props) {
@@ -80,6 +83,10 @@ export default class DS {
 
 		// axios
 		if (props.axios) this.axios = props.axios
+	}
+
+	expireCache() {
+		this.cacheMoment = null
 	}
 
 	setCacheMoment() {
@@ -169,6 +176,8 @@ export default class DS {
 					let data = await this.fetch()
 					// console.log('after fetch')
 
+					// change dataid
+					this.dataId = Math.random() * 1e17
 					this.inprogress = false
 					this.setCacheMoment()
 

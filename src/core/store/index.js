@@ -23,7 +23,8 @@ class Store {
 				dataValue: this.dataValue,
 				groupName: this.groupName,
 				storeName: this.storeName,
-				inprogress: this.ds.inprogress
+				inprogress: this.ds.inprogress,
+				dataId: this.ds.dataId
 			})
 		}
 		
@@ -60,7 +61,8 @@ class Store {
 			dataValue: this.dataValue,
 			groupName: this.groupName,
 			storeName: this.storeName,
-			inprogress: this.ds.inprogress
+			inprogress: this.ds.inprogress,
+			dataId: this.ds.dataId
 		}
 	}
 
